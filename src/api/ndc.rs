@@ -55,14 +55,12 @@ async fn save_to_db(pool: &SqlitePool, data: &[NDCProduct]) -> Result<(), sqlx::
                 listing_expiration_date,
                 marketing_category,
                 dosage_form,
-                spl_id,
                 product_type,
                 marketing_start_date,
-                product_id,
                 application_number,
                 brand_name_base
             ) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
             product.product_ndc,
             product.generic_name,
             product.labeler_name,
@@ -71,10 +69,8 @@ async fn save_to_db(pool: &SqlitePool, data: &[NDCProduct]) -> Result<(), sqlx::
             product.listing_expiration_date,
             product.marketing_category,
             product.dosage_form,
-            product.spl_id,
             product.product_type,
             product.marketing_start_date,
-            product.product_id,
             product.application_number,
             product.brand_name_base,
         )

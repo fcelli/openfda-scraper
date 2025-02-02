@@ -1,16 +1,14 @@
 CREATE TABLE IF NOT EXISTS ndc_product (
-    product_ndc TEXT PRIMARY KEY,
-    generic_name TEXT NULL,
-    labeler_name TEXT,
-    brand_name TEXT NULL,
+    product_ndc VARCHAR(9) PRIMARY KEY,
+    generic_name VARCHAR(255) NULL,
+    labeler_name VARCHAR(255),
+    brand_name VARCHAR(255) NULL,
     finished BOOLEAN,
-    listing_expiration_date TEXT NULL,
-    marketing_category TEXT,
-    dosage_form TEXT,
-    spl_id TEXT,
-    product_type TEXT,
-    marketing_start_date TEXT,
-    product_id TEXT,
-    application_number TEXT NULL,
-    brand_name_base TEXT NULL
+    listing_expiration_date DATE NULL,
+    marketing_category VARCHAR(255),
+    dosage_form VARCHAR(255),
+    product_type VARCHAR(255),
+    marketing_start_date DATE,
+    application_number VARCHAR(255) NULL,
+    brand_name_base VARCHAR(255) NULL
 )

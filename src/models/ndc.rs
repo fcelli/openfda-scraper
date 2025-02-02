@@ -26,10 +26,8 @@ pub struct NDCProduct {
     pub listing_expiration_date: Option<String>,
     pub marketing_category: String,
     pub dosage_form: String,
-    pub spl_id: String,
     pub product_type: String,
     pub marketing_start_date: String,
-    pub product_id: String,
     pub application_number: Option<String>,
     pub brand_name_base: Option<String>,
 }
