@@ -76,6 +76,26 @@ async fn save_to_db(pool: &SqlitePool, data: &[NDCProduct]) -> Result<(), sqlx::
         )
         .execute(&mut *tx)
         .await?;
+
+        for package in &product.packaging {
+            query!(
+                "INSERT OR IGNORE INTO ndc_package (
+                    product_ndc,
+                    package_ndc,
+                    description,
+                    marketing_start_date,
+                    sample
+                )
+                VALUES (?, ?, ?, ?, ?);",
+                product.product_ndc,
+                package.package_ndc,
+                package.description,
+                package.marketing_start_date,
+                package.sample,
+            )
+            .execute(&mut *tx)
+            .await?;
+        }
     }
 
     tx.commit().await?;
