@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS ndc_product (
     product_ndc TEXT PRIMARY KEY,
-    generic_name TEXT,
+    generic_name TEXT NULL,
     labeler_name TEXT,
     brand_name TEXT NULL,
     finished BOOLEAN,

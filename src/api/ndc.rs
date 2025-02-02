@@ -5,17 +5,39 @@ use sqlx::{query, SqlitePool};
 
 use crate::models::ndc::{ApiResponse, NDCProduct};
 
-const ENDPOINT: &str = "https://api.fda.gov/drug/ndc.json?limit=1000";
-
-pub async fn fetch_and_save(pool: &SqlitePool) -> Result<(), Box<dyn Error>> {
+pub async fn fetch_and_save(
+    pool: &SqlitePool,
+    endpoint: &str,
+    year_range: (i32, i32),
+    limit: i32,
+) -> Result<(), Box<dyn Error>> {
     let client = Client::new();
 
-    let response = client.get(ENDPOINT).send().await?;
+    for year in year_range.0..year_range.1 + 1 {
+        let start_date = format!("{year}0101");
+        let end_date = format!("{year}1231");
+        println!(
+            "Saving NDC data with marketing_start_date between {} and {}.",
+            start_date, end_date
+        );
+        let mut skip: i32 = 0;
+        loop {
+            let ep = format!(
+                "{endpoint}?search=marketing_start_date:[{start_date}+TO+{end_date}]&limit={limit}&skip={skip}"
+            );
 
-    let api_response: ApiResponse = response.json().await?;
+            let response = client.get(ep).send().await?;
 
-    save_to_db(pool, &api_response.results).await?;
+            let api_response: ApiResponse = response.json().await?;
 
+            save_to_db(pool, &api_response.results).await?;
+
+            skip += limit;
+            if skip >= api_response.meta.results.total {
+                break;
+            }
+        }
+    }
     Ok(())
 }
 

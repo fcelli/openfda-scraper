@@ -2,13 +2,24 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct ApiResponse {
+    pub meta: Meta,
     pub results: Vec<NDCProduct>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Meta {
+    pub results: MetaResults,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct MetaResults {
+    pub total: i32,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct NDCProduct {
     pub product_ndc: String,
-    pub generic_name: String,
+    pub generic_name: Option<String>,
     pub labeler_name: String,
     pub brand_name: Option<String>,
     pub finished: bool,
