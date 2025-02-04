@@ -3,7 +3,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct ApiResponse {
     pub meta: Meta,
-    pub results: Vec<NDCProduct>,
+    pub results: Vec<Product>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -17,13 +17,14 @@ pub struct MetaResults {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct NDCProduct {
+pub struct Product {
     pub product_ndc: String,
     pub generic_name: Option<String>,
     pub labeler_name: String,
     pub brand_name: Option<String>,
+    pub active_ingredients: Option<Vec<ActiveIngredient>>,
     pub finished: bool,
-    pub packaging: Vec<NDCPackage>,
+    pub packaging: Vec<Package>,
     pub listing_expiration_date: Option<String>,
     pub marketing_category: String,
     pub dosage_form: String,
@@ -34,9 +35,15 @@ pub struct NDCProduct {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct NDCPackage {
+pub struct Package {
     pub package_ndc: String,
     pub description: String,
     pub marketing_start_date: String,
     pub sample: Option<bool>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ActiveIngredient {
+    pub name: String,
+    pub strength: Option<String>,
 }

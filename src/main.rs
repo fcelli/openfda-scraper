@@ -6,7 +6,6 @@ use api::ndc::fetch_and_save;
 use database::get_db_connection;
 use dotenv::dotenv;
 use std::env;
-use tokio;
 
 #[tokio::main]
 async fn main() {
